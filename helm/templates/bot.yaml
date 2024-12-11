@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.deploy.botName}}
+spec:
+  selector:
+    app: {{.Values.deploy.botName}}
+  ports:
+    - protocol: TCP
+      port: {{.Values.deploy.port}}
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{.Values.deploy.botName}}"
+  namespace: "{{ .Values.deploy.namespace }}"
+  annotations:
+    #NOTE: not manage by helm
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{.Values.deploy.botName}}"
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: "{{.Values.deploy.botName}}"
+    spec:
+      nodeSelector:
+        displayName: oke-cztennn7ueq-n4brgatltva-sal7ea6wmqq-0
+      volumes:
+        - name: user-data
+          #NOTE: not manage by helm
+          persistentVolumeClaim:
+            claimName: user-data
+        - name: strategies
+          configMap:
+            name: "{{.Values.deploy.botName}}-strategies"
+            optional: false
+        - name: bot-config
+          secret:
+            secretName: "{{.Values.deploy.botName}}-config"
+            optional: false
+      initContainers:
+        - name: create-user-data
+          image: "{{ .Values.deploy.image }}"
+          args: ["create-userdir", "--userdir", "user_data"]
+          volumeMounts:
+            - name: user-data
+              subPath: "{{.Values.deploy.botName}}"
+              mountPath: /freqtrade/user_data
+      containers:
+        - name: bot
+          image: "{{ .Values.deploy.image }}"
+          args: ["trade", "--config", "config/config.json"]
+          volumeMounts:
+            - name: user-data
+              subPath: "{{.Values.deploy.botName}}"
+              mountPath: /freqtrade/user_data
+            - name: strategies
+              mountPath: "/freqtrade/user_data/strategies"
+            - name: bot-config
+              mountPath: "/freqtrade/config/"
+          resources:
+            requests:
+              memory: "1Gi"
+            limits:
+              memory: "1.5Gi"

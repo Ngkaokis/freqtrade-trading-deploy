@@ -1,0 +1,32 @@
+{
+  "strategy_name": "BbandRsi",
+  "params": {
+    "buy": {
+      "buy_rsi": 37
+    },
+    "sell": {
+      "sell_rsi": 91
+    },
+    "protection": {},
+    "roi": {
+      "0": 0.374,
+      "304": 0.161,
+      "940": 0.082,
+      "1752": 0
+    },
+    "stoploss": {
+      "stoploss": -0.238
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.215,
+      "trailing_stop_positive_offset": 0.31,
+      "trailing_only_offset_is_reached": false
+    },
+    "max_open_trades": {
+      "max_open_trades": 10
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2024-03-24 18:55:48.124905+00:00"
+}

@@ -1,0 +1,6 @@
+deploy:
+  namespace: freqtrade
+  botName: bot-3
+  storageSize: 2Gi
+  image: freqtradeorg/freqtrade:stable
+  port: 8082

@@ -1,0 +1,29 @@
+{
+  "strategy_name": "BBAWE",
+  "params": {
+    "max_open_trades": {
+      "max_open_trades": 3
+    },
+    "buy": {},
+    "sell": {},
+    "protection": {},
+    "roi": {
+      "0": 0.32199999999999995,
+      "234": 0.181,
+      "529": 0.051,
+      "1050": 0
+    },
+    "stoploss": {
+      "stoploss": -0.189
+    },
+    "trailing": {
+      "trailing_stop": true,
+      "trailing_stop_positive": 0.184,
+      "trailing_stop_positive_offset": 0.268,
+      "trailing_only_offset_is_reached": true
+    }
+  },
+  "ft_stratparam_v": 1,
+  "export_time": "2024-07-15 17:56:54.078990+00:00"
+}
+

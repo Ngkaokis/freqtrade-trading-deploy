@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{.Values.deploy.botName}}-strategies"
+data:
+{{ $path := printf "%s%s" .Values.deploy.botName "/strategies/*" }}
+{{ (.Files.Glob $path ).AsConfig | indent 2 }}
